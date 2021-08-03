@@ -32,3 +32,27 @@ MML is written in OCaml (OCaml 4.11.2 is required).
    * Debian/Ubuntu: `sudo apt-get install opam`
      * Other Linux: See [opam docs](https://opam.ocaml.org/doc/Install.html)
 
+## How Releases work
+
+We publish alpha, beta, release candidates, and full releases.
+
+1. A `-a` after the version number is in alpha stage.
+1. A `-b` after the version number is in beta stage.
+1. A `-rc` after the version number is a release candidate.
+
+--------------------
+
+Alpha release means the software is incomplete or partially complete.
+
+Beta release means the software is fully completed, but could still contain bugs or performance issues.
+
+Release candidate is a beta version with the potential of being released as a stable product, unless significant
+bugs emerge.
+
+--------------------
+
+Binary distributions will only be made for Linux users if in alpha stage.
+
+Binary distributions will be made for other operating systems (and Linux of course) if in beta stage or later.
+
+We will soon allow users to report bugs.

@@ -1,0 +1,41 @@
+enum TokenType {
+    Number,
+    Plus,
+    Minus,
+    Lparen,
+    Rparen
+    Eof,
+};
+
+// objects are literally just structs except there's a constructor (though no member methods)
+object Token {
+    type: TokenType,
+    value: nullable<number>
+
+    function($type: TokenType) {
+        type = $type;
+        value = null;
+    }
+
+    function($type: TokenType, $value: number) {
+        type = $type;
+        value = $value;
+    }
+};
+
+// impl string means you can call string on any Token object
+auto impl string on Token {
+    if (value != null) {
+        return format('{}:{}', type, value); // no need to call string() in format function
+    }
+
+    return format('{}', type);
+}
+
+// auto declarations are same as @auto {}, so memory will be automatically freed
+auto function main() {
+    $token = new Token(TokenType.Number, 23);
+    $token_as_str = string($token);
+
+    println $token_as_str;
+}

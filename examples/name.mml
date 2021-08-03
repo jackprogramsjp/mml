@@ -1,0 +1,10 @@
+function main() {
+    $line: string;
+    defer $line.free();
+
+    print r'Enter name: ';
+    flush stdout;
+    readline $line;
+    
+    println 'Hello ' + $line + ', what\'s up?';
+}
