@@ -1,4 +1,3 @@
 (env
   (release
-    (flags (:standard -O3)))
-)
+    (flags (:standard -O3))))
