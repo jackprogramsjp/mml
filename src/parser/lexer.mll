@@ -45,8 +45,35 @@
 
 let ws = [' ' '\t' '\r' ]
 
+let digit = ['0'-'9' ]
+let frac = '.' digit*
+let exp = ['e' 'E' ] ['-' '+' ]? digit+
+let number = digit* frac? exp?
+
+let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+
 rule token = parse
   ws+                           { token lexbuf }
 | '\n'                          { newline lexbuf; token lexbuf }
+| '$' id                        { VAR_IDENTIFIER (Lexing.lexeme lexbuf) }
+| id as i                       { match Hashtbl.find_opt keyword_tbl i with Some tok -> tok | None -> IDENTIFIER i }
+| number                        { NUMBER (float_of_string (Lexing.lexeme lexbuf)) }
+| "true"                        { NUMBER 1 }
+| "false"                       { NUMBER 0 }
+| "null"                        { NUMBER 0 }
+| '+'                           { PLUS }
+| '-'                           { MINUS }
+| '*'                           { MULTIPLY }
+| '/'                           { DIVIDE }
+| '='                           { EQ }
+| '<'                           { LT }
+| '>'                           { GT }
+| "=="                          { EE }
+| "!="                          { NEE }
+| "<="                          { LTE }
+| ">="                          { GTE }
+| '!'                           { NOT }
+| ';'                           { SEMI }
+| '$'                           { fail lexbuf ("Illegal -> '" ^ (Char.escaped c) ^ "'\nNote: When making variables, you have to put a $ together with the identifier, no whitespace, wrong: '$ var', right: '$var'") }
 | _ as c                        { fail lexbuf ("Illegal -> '" ^ (Char.escaped c) ^ "'") }
 | eof                           { EOF }

@@ -1,0 +1,18 @@
+import cstdlib;
+import cstring;
+import cmain;
+
+import 'C' {
+
+#define 
+
+};
+
+function main() {
+    $str: *cmain.char = cstdlib.malloc(cmain.sizeof(*$str) * 100);
+    cstring.strcpy($str, r'hello world');
+
+    println $str;
+
+    cstdlib.free($str);
+}
